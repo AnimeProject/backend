@@ -1,13 +1,55 @@
 exports.up = async (knex) => {
   await knex.schema
-    .createTable('users', (users) => {
-      users.increments('user_id')
-      users.string('username', 200).notNullable()
-      users.string('password', 200).notNullable()
-      users.timestamps(false, true)
+    .createTable('users', (tbl) => {
+      tbl.increments('user_id')
+      tbl.string('username', 200).notNullable().unique()
+      tbl.string('password', 200).notNullable()
+      tbl.timestamps(false, true)
+    })
+    .createTable('friends_list', (tbl) => {
+      tbl.increments('friends_list_id')
+      tbl.integer('friend_id')
+         .unsigned()
+         .notNullable()
+         .references('user_id')
+         .inTable('users')
+         .onUpdate('CASCADE')
+         .onDelete('CASCADE')
+      tbl.integer('user_id')
+         .unsigned()
+         .notNullable()
+         .references('user_id')
+         .inTable('users')
+         .onUpdate('CASCADE')
+         .onDelete('CASCADE')
+    })
+    .createTable('anime', (tbl) => {
+      tbl.increments('anime_id') 
+      tbl.integer('completed')
+      tbl.integer('rating').unsigned()
+    })
+    .createTable('anime_list', (tbl) => {
+      tbl.increments('anime_list_id')
+      tbl.integer('user_id')
+          .unsigned()
+          .notNullable()
+          .references('user_id')
+          .inTable('users')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
+      tbl.integer('anime_id')
+          .unsigned()
+          .notNullable()
+          .references('anime_id')
+          .inTable('anime')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
     })
 }
 
 exports.down = async (knex) => {
+  await knex.schema.dropTableIfExists('anime_list')
+  await knex.schema.dropTableIfExists('anime')
+  await knex.schema.dropTableIfExists('friends_list')
   await knex.schema.dropTableIfExists('users')
 }

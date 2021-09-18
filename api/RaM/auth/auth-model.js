@@ -1,4 +1,3 @@
-  
 const db = require('../../../data/db-config')
 
 function getAllUsers() { return db('users').select('username', 'user_id') }
