@@ -2,17 +2,19 @@
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
-const server = express()
 
 // Router Imports
 const authRouter = require('./RaM/auth/auth-router')
+const friendsRouter = require('./RaM/friends/friends_router')
 
 // Server uses
+const server = express()
 server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
 server.use('/api/auth', authRouter)
+server.use('/api/friends', friendsRouter)
 
 // server.use('*', (req, res, next) => {
 //   next({status: 404, message: 'not found'})
