@@ -1,4 +1,4 @@
-# Animenu
+# Animenu Backend
 
 ## Summary of project
 
