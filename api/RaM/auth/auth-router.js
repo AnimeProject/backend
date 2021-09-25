@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./auth-model')
 const {TOKEN_SECRET} = require('../../secret/secret')
+const {validateBody} = require('./middleware')
 
 // Generating our token
 function generateToken(user) {
@@ -15,10 +16,14 @@ function generateToken(user) {
   };
   return jwt.sign(payload, TOKEN_SECRET, options);
 }
-router.get('/', async (req, res, next) => {
+router.get('/', validateBody, async (req, res, next) => {
     try{
-        const users = await User.getAllUsers()
-        res.status(200).json(users)
+        const user = await User.getUser(req.body)
+        if(!user){
+          next({status: 400, message: 'User does not exist'})
+        }else{
+          res.status(200).json(user)
+        }
     }catch(error){
         next(error)
     }
