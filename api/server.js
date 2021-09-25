@@ -13,7 +13,7 @@ server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
-server.use('/api/auth', authRouter)
+server.use('/api/users', authRouter)
 server.use('/api/friends', friendsRouter)
 
 server.use('*', (req, res, next) => {

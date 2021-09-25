@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Friends = require('./friends_model')
-const {validateFriendExists} = require('./middleware')
+const {validateFriendExists, checkFriendship, checkObject} = require('./middleware')
 
 router.get('/:id', async (req, res, next) => {
     try{
@@ -10,9 +10,10 @@ router.get('/:id', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/', validateFriendExists, async (req, res, next) => {
+router.post('/', checkObject, validateFriendExists, checkFriendship, async (req, res, next) => {
     try{
-        res.status(201).json({message: 'heyo.'})
+        const [newFriend] = await Friends.addFriend(req.body)
+        res.status(201).json(newFriend)
     }catch(error){
         next(error)
     }
