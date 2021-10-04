@@ -15,6 +15,20 @@ const validateFriendExists = (req, res, next) => {
         })
         .catch(next)
 }
+const validateUserExists = (req, res, next) => {
+    User.findById(req.params.id)
+        .then(user => {
+            if(user){
+                next()
+            }else{
+                next({
+                    status: 400,
+                    message: 'User does not exist'
+                })
+            }
+        })
+        .catch(next)
+}
 
 const checkFriendship = (req, res, next) => {
     Friend.searchFriendship(req.body)
@@ -50,6 +64,7 @@ const checkObject = (req, res, next) => {
 
 module.exports = {
     validateFriendExists,
+    validateUserExists,
     checkFriendship,
     checkObject
 }
