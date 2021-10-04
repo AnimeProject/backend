@@ -16,6 +16,7 @@ function generateToken(user) {
   };
   return jwt.sign(payload, TOKEN_SECRET, options);
 }
+
 router.get('/', validateBody, async (req, res, next) => {
     try{
         const user = await User.getUser(req.body)
