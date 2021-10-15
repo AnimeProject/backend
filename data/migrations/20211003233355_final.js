@@ -23,23 +23,22 @@ exports.up = async (knex) => {
          .onUpdate('CASCADE')
          .onDelete('CASCADE')
     })
-      .createTable('lists', (tbl) => {
-        tbl.increments('list_id')
-        tbl.integer('user_id')
-           .unsigned()
-           .notNullable()
-           .references('user_id')
-           .inTable('users')
-           .onUpdate('CASCADE')
-           .onDelete('CASCADE')
-        tbl.integer('anime_id') 
-        tbl.integer('completed')
-        tbl.integer('rating').unsigned()
-      })
+    .createTable('lists', (tbl) => {
+      tbl.increments('lists_id')
+      tbl.integer('user_id')
+          .unsigned()
+          .references('user_id')
+          .inTable('users')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
+      tbl.integer('anime_id') 
+      tbl.integer('completed')
+      tbl.integer('rating').unsigned()
+    })
   }
   
   exports.down = async (knex) => {
-    await knex.schema.dropTableIfExists('list')
+    await knex.schema.dropTableIfExists('lists')
     await knex.schema.dropTableIfExists('friends_list')
     await knex.schema.dropTableIfExists('users')
   }

@@ -5,6 +5,7 @@ exports.seed = function(knex) {
           {username: 'michaelquint', password: '$2a$07$/i12gVOeeHYYvPbFawlCauFEo6zp44TDAFZaT2UYavpKqhUfneYC.'},//password = heyo
           {username: 'michaelsfriend', password: '$2a$07$/i12gVOeeHYYvPbFawlCauFEo6zp44TDAFZaT2UYavpKqhUfneYC.'},//password = heyo
           {username: 'anotherfriend', password: '$2a$07$/i12gVOeeHYYvPbFawlCauFEo6zp44TDAFZaT2UYavpKqhUfneYC.'},//password = heyo
+          {username: 'randomperson', password: '$2a$07$/i12gVOeeHYYvPbFawlCauFEo6zp44TDAFZaT2UYavpKqhUfneYC.'},//password = heyo
         ]);
       });
   };
