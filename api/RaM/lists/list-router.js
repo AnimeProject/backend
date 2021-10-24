@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const List = require('./list-model')
+const {validatePostBody, validateUpdateBody, checkListExists} = require('./middleware')
 
 router.get('/:id', async (req, res, next) => {
     try{
@@ -17,14 +18,21 @@ router.get('/', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/', async (req, res, next) => {
-    res.status(200).json({message: 'heyo'})
+router.post('/', validatePostBody, async (req, res, next) => {
+    try{
+        const listId = await List.insert(req.body)
+        res.status(201).json(listId)
+    }catch(error){
+        next(error)
+    }
 })
-router.put('/', async (req, res, next) => {
-    res.status(200).json({message: 'heyo'})
-})
-router.delete('/', async (req, res, next) => {
-    res.status(200).json({message: 'heyo'})
+router.put('/:id', validateUpdateBody, checkListExists, async (req, res, next) => {
+    try{
+        const listId = await List.update(req.params.id, req.body)
+        res.status(200).json(listId)
+    }catch(error){
+        next(error)
+    }
 })
 
 

@@ -24,7 +24,7 @@ exports.up = async (knex) => {
          .onDelete('CASCADE')
     })
     .createTable('lists', (tbl) => {
-      tbl.increments('lists_id')
+      tbl.increments('list_id')
       tbl.integer('user_id')
           .unsigned()
           .references('user_id')
