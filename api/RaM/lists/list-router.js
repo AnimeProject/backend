@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const List = require('./list-model')
-const {validatePostBody, validateUpdateBody, checkListExists} = require('./middleware')
+const {validatePostBody, validateUpdateBody, checkListExists, doesAnimeExist} = require('./middleware')
 
 router.get('/:id', async (req, res, next) => {
     try{
@@ -18,9 +18,9 @@ router.get('/', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/', validatePostBody, async (req, res, next) => {
+router.post('/', validatePostBody, doesAnimeExist, async (req, res, next) => {
     try{
-        const listId = await List.insert(req.body)
+        const [listId] = await List.insert(req.body)
         res.status(201).json(listId)
     }catch(error){
         next(error)

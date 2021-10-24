@@ -22,8 +22,8 @@ const checkListExists = async (req, res, next) => {
             next()
         }
     }
-
 }
+
 const validatePostBody = (req, res, next) => {
     if(!req.body.anime_id){
         next({status: 400, message: 'include anime_id key in request'})
@@ -39,8 +39,17 @@ const validatePostBody = (req, res, next) => {
         next()
     }
 }
+const doesAnimeExist = async (req, res, next) => {
+    const animeArray = await db('lists').where({anime_id: req.body.anime_id}).first()
+    if(!animeArray){
+        next()
+    }else{
+        next({status: 400, message: 'Anime already exists in database. Update it on your list instead'})
+    }
+}
 module.exports = {
     validateUpdateBody,
     validatePostBody,
-    checkListExists
+    checkListExists,
+    doesAnimeExist
 }
