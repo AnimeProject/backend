@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const Friends = require('./friends_model')
-const {validateFriendExists, checkFriendship, checkObject} = require('./middleware')
+const {validateFriendExists, checkFriendship, validateUserExists, checkObject} = require('./middleware')
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateUserExists, async (req, res, next) => {
     try{
         const friendsArray = await Friends.getAllFriends(req.params.id)
         res.status(200).json(friendsArray)

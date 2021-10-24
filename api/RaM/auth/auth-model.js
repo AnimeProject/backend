@@ -4,7 +4,7 @@ function getUser(user) { return db('users').where(user).first().select('user_id'
 
 function findBy(filter) {
     return db("users").where(filter);
-  }
+}
 
 function findById(id){
     return db('users').where({user_id: id}).select('user_id', 'username').first()
