@@ -31,8 +31,7 @@ router.get('/', validateBody, async (req, res, next) => {
 })
 router.get('/:id', async (req, res, next) => {
     try{
-        const id = parseInt(req.params.id)
-        const user = await User.findById(id)
+        const user = await User.findById(req.params.id)
         res.status(200).json(user)
     }catch(error){
         next(error)
