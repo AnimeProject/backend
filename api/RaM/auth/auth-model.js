@@ -15,7 +15,7 @@ async function findById(id){
     const list_ids = []
     const animes = []
     userArray.map(user => {
-        const {friend_id, list_id, anime_id, completed, rating, ...rest} = user
+        const {friend_id, list_id, anime_id, completed, rating} = user
         if(!friends.includes(friend_id)){
             friends.push(friend_id);
         }
