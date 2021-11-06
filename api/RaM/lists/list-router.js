@@ -35,5 +35,14 @@ router.put('/:id', validateUpdateBody, checkListExists, async (req, res, next) =
     }
 })
 
+router.delete('/:id', checkListExists, async (req, res, next) => {
+    try{
+        const item = await List.del(req.params.id)
+        res.status(200).json(`${item} row was deleted from database`)
+    }catch(error){
+        next(error)
+    }
+})
+
 
 module.exports = router

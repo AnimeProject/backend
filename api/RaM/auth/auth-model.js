@@ -14,10 +14,11 @@ async function findById(id){
     const friends = []
     const list_ids = []
     const animes = []
-    userArray.map(user => {
+    for(const user of userArray) {
         const {friend_id, list_id, anime_id, completed, rating} = user
-        if(!friends.includes(friend_id)){
-            friends.push(friend_id);
+        if(!friends.includes({friend_id: friend_id})){
+            const [newFriend] = await getUser({user_id: friend_id})
+            friends.push(newFriend);
         }
         if(!list_ids.includes(list_id)){
             list_ids.push(list_id);
@@ -28,7 +29,7 @@ async function findById(id){
                 rating: rating,
             })
         }
-    })
+    }
     return {
         user_id: userArray[0].user_id,
         username: userArray[0].username,
