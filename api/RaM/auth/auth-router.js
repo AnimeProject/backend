@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const User = require('./auth-model')
 const {TOKEN_SECRET} = require('../../secret/secret')
 const {validateBody} = require('./middleware')
+const restricted = require('./restricted')
 
 // Generating our token
 function generateToken(user) {
@@ -17,7 +18,7 @@ function generateToken(user) {
   return jwt.sign(payload, TOKEN_SECRET, options);
 }
 
-router.get('/', validateBody, async (req, res, next) => {
+router.get('/', validateBody, restricted, async (req, res, next) => {
     try{
         const user = await User.getUser(req.body)
         if(!user){
@@ -29,7 +30,7 @@ router.get('/', validateBody, async (req, res, next) => {
         next(error)
     }
 })
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', restricted, async (req, res, next) => {
     try{
         const user = await User.findById(req.params.id)
         res.status(200).json(user)
