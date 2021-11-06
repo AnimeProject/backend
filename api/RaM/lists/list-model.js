@@ -41,14 +41,20 @@ function insert(list){
     return db('lists').insert(list, ['list_id'])
 }
 
-// This is the one function in this file that requires a LIST_ID and not a USER_ID
+// Require list_id not user_id
 function update(id, newData){
     return db('lists').update(newData, ['list_id']).where({ list_id: id })
 }
+
+function del(id){
+    return db('lists').where({list_id: id}).del()
+}
+
 
 module.exports = {
     findById,
     findAll,
     insert,
-    update
+    update,
+    del
 }

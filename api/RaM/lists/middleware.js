@@ -3,7 +3,7 @@ const db = require('../../../data/db-config')
 const validateUpdateBody = (req, res, next) => {
     if(!req.body.anime_id){
         next({status: 400, message: 'include anime_id key in request'})
-    }else if(!req.body.completed){
+    }else if(req.body.completed !== 0 || req.body.completed !== 1){
         next({status: 400, message: 'include completed key in request'})
     }else if(!req.body.rating){
         next({status: 400, message: 'include rating key in request'})
