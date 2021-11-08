@@ -6,6 +6,15 @@ function findBy(filter) {
     return db("users").where(filter);
 }
 
+async function findNewUser(id){
+    const user = await db('users').where('user_id', id).first().select('user_id', 'username')
+    return {
+        ...user,
+        animes:[],
+        friends:[]
+    }
+}
+
 async function findById(id){
     const userArray = await db('users as u').where('u.user_id', id)
         .join('lists as l', 'l.user_id', 'u.user_id')
@@ -28,6 +37,7 @@ async function findById(id){
                 rating: rating,
             })
         }
+    
     })
     return {
         user_id: userArray[0].user_id,
@@ -46,5 +56,6 @@ module.exports = {
     findBy,
     findById,
     getUser,
-    add
+    add,
+    findNewUser
 }
