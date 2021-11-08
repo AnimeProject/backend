@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./auth-model')
 const {TOKEN_SECRET} = require('../../secret/secret')
-const {validateBody} = require('./middleware')
+const {validateBody, checkList} = require('./middleware')
 const restricted = require('./restricted')
 
 // Generating our token
@@ -30,10 +30,15 @@ router.get('/', validateBody, restricted, async (req, res, next) => {
         next(error)
     }
 })
-router.get('/:id', restricted, async (req, res, next) => {
+router.get('/:id', checkList, restricted, async (req, res, next) => {
     try{
-        const user = await User.findById(req.params.id)
-        res.status(200).json(user)
+        if(req.newUser){
+          const newAccount = await User.findNewUser(req.params.id)
+          res.status(200).json(newAccount)
+        }else{
+          const user = await User.findById(req.params.id)
+          res.status(200).json(user)
+        }
     }catch(error){
         next(error)
     }
