@@ -18,16 +18,11 @@ async function findNewUser(id){
 async function findById(id){
     const userArray = await db('users as u').where('u.user_id', id)
         .join('lists as l', 'l.user_id', 'u.user_id')
-        .join('friends_list as f', 'f.user_id', 'u.user_id')
-        .select('u.user_id', 'u.username', 'f.friend_id', 'l.*')
-    const friends = []
+        .select('u.user_id', 'u.username', 'l.*')
     const list_ids = []
     const animes = []
     userArray.map(user => {
-        const {friend_id, list_id, anime_id, completed, rating} = user
-        if(!friends.includes(friend_id)){
-            friends.push(friend_id);
-        }
+        const {list_id, anime_id, completed, rating} = user
         if(!list_ids.includes(list_id)){
             list_ids.push(list_id);
             animes.push({
@@ -42,7 +37,7 @@ async function findById(id){
     return {
         user_id: userArray[0].user_id,
         username: userArray[0].username,
-        friends: friends,
+        friends: [],
         animes: animes
     }
 }
