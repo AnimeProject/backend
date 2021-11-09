@@ -8,10 +8,10 @@ The following tutorial explains how to set up this project using PostgreSQL and 
 
 | Endpoint | params | input | output | requires Auth token |
 | -------- | ------ | ----- | ------ | ------------------- |
-| [GET] /api/users | none | username | user_id, username | Yes |
-| [GET] /api/users/:id | id | none | user_id, username | Yes |
 | [POST] /api/users/register | no | username, password | user_id, username | No |
 | [POST] /api/users/login | no | username, password | user_id, username | No |
+| [GET] /api/users | none | username | user_id, username | Yes |
+| [GET] /api/users/:id | id | none | user_id, username | Yes |
 | [GET] /api/friends/:id | ID | none | arrayu of user_id's, and usernames | Yes |
 | [POST] /api/friends | no | username, password | user_id, username | Yes |
 | [GET] /api/lists/:id | USER ID | none | array containing user id, anime id, completed, and rating | Yes |
