@@ -38,7 +38,7 @@ const validatePostBody = (req, res, next) => {
     }
 }
 const doesAnimeExist = async (req, res, next) => {
-    const animeArray = await db('lists').where({anime_id: req.body.anime_id}).first()
+    const animeArray = await db('lists as l').where({anime_id: req.body.anime_id}).andWhere({user_id: req.body.user_id}).first()
     if(!animeArray){
         next()
     }else{
